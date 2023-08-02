@@ -1,12 +1,12 @@
 {
-    "name": "phonebook-backend",
-    "version": "0.0.1",
-    "description": "Backend for phonebook assignments in part 3.",
-    "main": "index.js",
-    "scripts": {
-      "start": "node index.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Apollo Ailus",
-    "license": "MIT"
-  }
+  "name": "phonebook-backend",
+  "version": "0.0.1",
+  "description": "Backend for phonebook assignments in part 3.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apollo Ailus",
+  "license": "MIT"
+}
