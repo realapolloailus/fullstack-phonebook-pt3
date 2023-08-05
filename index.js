@@ -39,10 +39,11 @@ app.get('/api/persons', (req, res) =>{
 })
 
 const generateID =  () =>{
-    const maxId = persons.length > 0
+    /*const maxId = persons.length > 0
         ? Math.max(...persons.map( p => p.id ))
         : 0
-    return maxId+1
+    return maxId+1*/
+    return Math.floor(Math.random() * 1000);
 }
 
 app.post('/api/persons', (request, response)=>{
@@ -50,6 +51,11 @@ app.post('/api/persons', (request, response)=>{
     if(!body.name || !body.number){
         return response.status(400).json({
             error: 'content missing'
+        })
+    }
+    if( persons.find(p=> p.name === body.name) ){
+        return response.status(409).json({
+            error: 'name must be unique'
         })
     }
     const person = {
