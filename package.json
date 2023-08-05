@@ -1,6 +1,6 @@
 {
   "name": "phonebook-backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Backend for phonebook assignments in part 3.",
   "main": "index.js",
   "scripts": {
