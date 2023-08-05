@@ -2,22 +2,21 @@ console.log('hello world')
 
 const express = require('express')
 const app = express()
+var morgan = require('morgan')
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+const cors = require('cors')
 
 app.use(express.json())
-
-var morgan = require('morgan')
-//app.use(morgan('tiny'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
+app.use(cors())
 
 morgan.token('content', (request) =>
   request.method === 'POST' && request.body.name
     ? JSON.stringify(request.body)
     : null
 )
-
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
 
 let persons = [
     { 
