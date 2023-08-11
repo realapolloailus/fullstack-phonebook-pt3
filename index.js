@@ -8,6 +8,22 @@ const unknownEndpoint = (request, response) => {
 }
 const cors = require('cors')
 
+const mongoose = require('mongoose')
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url =
+  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+
+mongoose.set('strictQuery',false)
+mongoose.connect(url)
+
+const personSchema = new mongoose.Schema({
+    name: String,
+    number: String,
+})
+
+const Person = mongoose.model("Person", personSchema)
+
 app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 app.use(cors())
@@ -49,7 +65,13 @@ app.get('/', (req, res) => {
 // Begin code for api/persons:  
 
 app.get('/api/persons', (req, res) =>{
-    res.json(persons)
+    //res.json(persons)
+    Person
+        .find({})
+        .then(people=>{
+            res.json(people)
+        })
+
 })
 
 const generateID =  () =>{
