@@ -10,7 +10,8 @@ const cors = require('cors')
 
 const mongoose = require('mongoose')
 
-const yourpassword = process.env.password
+const yourpassword = process.argv[2]
+console.log(yourpassword);
 
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url =
