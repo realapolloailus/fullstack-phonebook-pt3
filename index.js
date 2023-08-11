@@ -70,11 +70,13 @@ app.get('/', (req, res) => {
 app.get('/api/persons', (req, res) =>{
     //res.json(persons)
     Person
-        .find({})
-        .then(people=>{
-            res.json(people)
+        .find({ })
+        .then(result => {
+        result.forEach(person => {
+          res.json(person)
         })
-
+    mongoose.connection.close()
+    })
 })
 
 const generateID =  () =>{
