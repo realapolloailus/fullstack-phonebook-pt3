@@ -10,6 +10,8 @@ const cors = require('cors')
 
 const mongoose = require('mongoose')
 
+const yourpassword = process.env.password
+
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url =
   `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
