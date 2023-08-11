@@ -12,7 +12,7 @@ if (process.argv.length<3) {
 const yourpassword = process.argv[2]
 
 const url =
-  `mongodb+srv://apolloailus:${'bTSarK69Fyn0LngB'}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
