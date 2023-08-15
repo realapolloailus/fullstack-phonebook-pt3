@@ -80,7 +80,7 @@ app.get('/api/persons', (req, res) =>{
     Person
     .find({})
     .then(persons => {
-      response.json(persons)
+      res.json(persons)
     })
 })
 
