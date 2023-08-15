@@ -104,20 +104,25 @@ app.post('/api/persons', (request, response)=>{
             error: 'name must be unique'
         })
     }
-    const person = {
+    const person = new Person({
         id: generateID(),
         name: body.name,
         number: body.number,
-    }
-    persons = persons.concat(person)
-    response.json(person)
+    })
+    //persons = persons.concat(person)
+    //response.json(person)
+    person
+      .save()
+      .then(savedPerson=>{
+        response.json(savedPerson)
+      })
 
 })
 
 app.get('/api/persons/:id', (request, response)=>{
     const id = Number(request.params.id)
     console.log(id);
-    const person = persons.find(p=> p.id === id)
+    /*const person = persons.find(p=> p.id === id)
     console.log(person);
 
     if(person){
@@ -125,7 +130,12 @@ app.get('/api/persons/:id', (request, response)=>{
     }
     else{
         response.status(404).end()
-    }
+    }*/
+    Person
+      .findById(id)
+      .then(person =>{
+        response.json(person)
+      })
 
 })
 
