@@ -94,10 +94,8 @@ const generateID =  () =>{
 
 app.post('/api/persons', (request, response)=>{
     const body = request.body
-    if(!body.name || !body.number){
-        return response.status(400).json({
-            error: 'content missing'
-        })
+    if ((body.content === undefined) || (!body.name || !body.number)) {
+      return response.status(400).json({ error: 'content missing' })
     }
     if( persons.find(p=> p.name === body.name) ){
         return response.status(409).json({
