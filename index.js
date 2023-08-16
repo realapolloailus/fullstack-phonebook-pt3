@@ -79,8 +79,8 @@ app.get('/api/persons', (req, res) =>{
     //res.json(persons)
     Person
     .find({})
-    .then(person => {
-      res.json(person)
+    .then(persons => {
+      res.json(persons)
     })
 })
 
@@ -92,7 +92,7 @@ const generateID =  () =>{
     return Math.floor(Math.random() * 1000);
 }
 
-app.post('/api/persons', (request, response)=>{
+app.post('/api/persons', (request, response, next)=>{
     const body = request.body
     if ((!body.name || !body.number)) {
       return response.status(400).json({ error: 'content missing' })
@@ -102,19 +102,20 @@ app.post('/api/persons', (request, response)=>{
             error: 'name must be unique'
         })
     }
-    const person = new Person({
-        id: generateID(),
+    const newPerson = new Person({
+        //id: generateID(),
         name: body.name,
         number: body.number,
     })
     //persons = persons.concat(person)
     //response.json(person)
-    person
+    newPerson
       .save()
-      .then(savedPerson=>{
-        console.log("Person's name and number: ", savedPerson.name, savedPerson.number);
-        response.json(savedPerson)
-      })
+      .then(savedPerson=>savedPerson.toJSON())
+      .then(savedPersonFormatted=>{
+        //console.log("Person's name and number: ", savedPersonFormatted.name, savedPersonFormatted.number);
+        response.json(savedPersonFormatted)
+      }).catch(error => next(error))
 
 })
 
@@ -159,8 +160,14 @@ app.delete('/api/persons/:id', (request, response)=>{
 app.get('/info', (request, response)=>{
     var date = new Date();
     const totalLen=persons.length
-    response.send(`<p>Phonebook has info for ${totalLen} people</p>
+    /*response.send(`<p>Phonebook has info for ${totalLen} people</p>
+                   <p>${date}</p>`)*/
+    Person
+    .find({})
+    .then(persons => {
+      response.send(`<p>Phonebook has info for ${totalLen} people</p>
                    <p>${date}</p>`)
+    })
 })
 
 // End code for api/info.
