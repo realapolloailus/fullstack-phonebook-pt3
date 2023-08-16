@@ -46,7 +46,7 @@ morgan.token('content', (request) =>
     : null
 )
 
-/*let persons = [
+let persons = [
     { 
       id: 1,
       name: "Arto Hellas", 
@@ -67,7 +67,7 @@ morgan.token('content', (request) =>
       name: "Mary Poppendieck", 
       number: "39-23-6423122"
     }
-]*/
+]
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
