@@ -80,11 +80,7 @@ app.get('/api/persons', (req, res) =>{
     Person
     .find({})
     .then(person => {
-      if(person){ res.json(person) }
-      else{ res.status(404).end() }
-    }).catch(error =>{
-      console.log("Error:", error);
-      res.status(500).end()
+      res.json(person)
     })
 })
 
@@ -134,10 +130,14 @@ app.get('/api/persons/:id', (request, response)=>{
         response.status(404).end()
     }*/
     Person
-      .findById(id)
-      .then(person =>{
-        response.json(person)
-      })
+    .find({})
+    .then(person => {
+      if(person){ res.json(person) }
+      else{ res.status(404).end() }
+    }).catch(error =>{
+      console.log("Error:", error);
+      res.status(500).end()
+    })
 
 })
 
