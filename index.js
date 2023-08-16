@@ -46,7 +46,7 @@ morgan.token('content', (request) =>
     : null
 )
 
-let persons = [
+/*let persons = [
     { 
       id: 1,
       name: "Arto Hellas", 
@@ -67,7 +67,7 @@ let persons = [
       name: "Mary Poppendieck", 
       number: "39-23-6423122"
     }
-]
+]*/
 
 app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
@@ -112,6 +112,7 @@ app.post('/api/persons', (request, response)=>{
     person
       .save()
       .then(savedPerson=>{
+        console.log("Person's name and number: ", savedPerson.name, savedPerson.number);
         response.json(savedPerson)
       })
 
