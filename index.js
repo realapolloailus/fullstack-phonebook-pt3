@@ -83,7 +83,7 @@ app.get('/api/persons', (req, res) =>{
       if(person){ res.json(person) }
       else{ res.status(404).end() }
     }).catch(error =>{
-      console.log(error);
+      console.log("Error:", error);
       res.status(500).end()
     })
 })
