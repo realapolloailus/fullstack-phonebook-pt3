@@ -80,7 +80,11 @@ app.get('/api/persons', (req, res) =>{
     Person
     .find({})
     .then(persons => {
-      res.json(persons)
+      if(persons){ res.json(persons) }
+      else{ res.status(404).end() }
+    }).catch(error =>{
+      console.log(error);
+      res.status(500).end()
     })
 })
 
