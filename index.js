@@ -79,8 +79,8 @@ app.get('/api/persons', (req, res) =>{
     //res.json(persons)
     Person
     .find({})
-    .then(persons => {
-      if(persons){ res.json(persons) }
+    .then(person => {
+      if(person){ res.json(person) }
       else{ res.status(404).end() }
     }).catch(error =>{
       console.log(error);
