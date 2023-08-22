@@ -85,6 +85,8 @@ const generateID =  () =>{
     return Math.floor(Math.random() * 1000);
 }
 
+// Begin code for adding entries to phonebook:
+
 app.post('/api/persons', (request, response, next)=>{
     const body = request.body
     if ((!body.name || !body.number)) {
@@ -109,6 +111,10 @@ app.post('/api/persons', (request, response, next)=>{
 
 })
 
+// End code for adding entries to phonebook.
+
+// Begin code for retrieving single entries from phonebook:
+
 app.get('/api/persons/:id', (request, response, next)=>{
     console.log(request.params.id);
     Person.findById(request.params.id)
@@ -123,7 +129,7 @@ app.get('/api/persons/:id', (request, response, next)=>{
 
 })
 
-// End code for api/persons.
+// End code for retrieving single entries from phonebook.
 
 // Begin code for /info:
 

@@ -9,10 +9,12 @@ if (process.argv.length<3) {
 
 
 
-const yourpassword = process.argv[2]
+//const yourpassword = process.argv[2]
 
-const url =
-  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+//const url =
+//  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+
+const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
@@ -24,8 +26,13 @@ mongoose.connect(url)
   })
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name:{
+      type: String
+    },
+    
+    number:{
+      type: String
+    } 
 })
 
 const Person = mongoose.model("Person", personSchema)
