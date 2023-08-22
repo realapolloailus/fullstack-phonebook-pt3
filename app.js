@@ -34,3 +34,5 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :c
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 app.use('/api/persons', personsRouter)
+
+module.exports = app
