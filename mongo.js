@@ -7,8 +7,6 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 
-
-
 const yourpassword = process.argv[2]
 
 const url =
@@ -27,7 +25,7 @@ const personSchema = new mongoose.Schema({
     name:{
       type: String,
       minLength: 3
-    } ,
+    },
     
     number:{
       type: String
