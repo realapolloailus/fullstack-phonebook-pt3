@@ -2,15 +2,16 @@
 
 const mongoose = require('mongoose')
 
-if (process.argv.length<3) {
+/*if (process.argv.length<3) {
   console.log('give password as argument')
   process.exit(1)
-}
+}*/
 
-const yourpassword = process.argv[2]
+//const yourpassword = process.argv[2]
 
-const url =
-  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+/*const url =
+  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`*/
+const url = process.env.MONGODB_URI
 
 mongoose.set('strictQuery',false)
 mongoose.connect(url)
@@ -50,7 +51,7 @@ const person = new Person({
 
 
 
-if(process.argv.length===3){
+/*if(process.argv.length===3){
     console.log('phonebook:');
     Person
         .find({ })
@@ -60,15 +61,15 @@ if(process.argv.length===3){
         })
     mongoose.connection.close()
   })
-}
+}*/
 
 
-else{
+//else{
     person.save().then(result => {
     console.log('person saved!')
     mongoose.connection.close()
     })
-}  
+//}  
 
 
 
