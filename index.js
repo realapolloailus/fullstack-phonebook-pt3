@@ -148,11 +148,11 @@ app.get('/info', (request, response)=>{
 app.put('/api/persons/:id', (request, response, next)=>{
   const body = request.body
 
-  const newPerson = new Person({
+  const newPerson = {
     //id: generateID(),
     name: body.name,
     number: body.number,
-  })
+  }
 
   Person.findByIdAndUpdate(request.params.id, newPerson, {new: true})
     .then(person =>{
