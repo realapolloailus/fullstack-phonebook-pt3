@@ -9,6 +9,12 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
 
+var morgan = require('morgan')
+morgan.token('content', (request) =>
+	request.method === 'POST' && request.body.name
+		? JSON.stringify(request.body)
+		: null
+)
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url = process.env.MONGODB_URI
 logger.info('connecting to', config.MONGODB_URI)
