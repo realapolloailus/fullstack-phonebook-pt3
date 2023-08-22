@@ -2,15 +2,8 @@
 
 const mongoose = require('mongoose')
 
-if (process.argv.length<3) {
-  console.log('give password as argument')
-  process.exit(1)
-}
-
-
 const url = process.env.MONGODB_URI
 
-mongoose.set('strictQuery',false)
 mongoose.connect(url)
   .then(result => {
     console.log('connected to MongoDB')
@@ -20,8 +13,13 @@ mongoose.connect(url)
   })
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String
+    name:{
+      type: String
+    },
+    
+    number:{
+      type: String
+    } 
 })
 
 const Person = mongoose.model("Person", personSchema)
