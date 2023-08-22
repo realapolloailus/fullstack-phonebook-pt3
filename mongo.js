@@ -2,8 +2,19 @@
 
 const mongoose = require('mongoose')
 
-const url = process.env.MONGODB_URI
+if (process.argv.length<3) {
+  console.log('give password as argument')
+  process.exit(1)
+}
 
+
+
+const yourpassword = process.argv[2]
+
+const url =
+  `mongodb+srv://apolloailus:${yourpassword}@cluster0.xmyde6z.mongodb.net/personApp?retryWrites=true&w=majority`
+
+mongoose.set('strictQuery',false)
 mongoose.connect(url)
   .then(result => {
     console.log('connected to MongoDB')
@@ -15,7 +26,7 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({
     name:{
       type: String
-    },
+    } ,
     
     number:{
       type: String
