@@ -159,7 +159,7 @@ app.get('/info', (request, response)=>{
 
 // Begin code for deleting phonebook entries:
 app.delete('/api/persons/:id', (request, response, next ) =>{
-  Person.findOneAndDelete({id: request.params.id})
+  Person.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
     })
