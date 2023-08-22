@@ -120,10 +120,6 @@ app.get('/api/persons/:id', (request, response, next)=>{
         response.status(404).end() 
       }
     })
-    /*.catch(error => {
-      console.log(error)
-      response.status(400).send({ error: 'malformatted id' })    
-    })*/
     .catch(error=>next(error))
 
 })
@@ -136,8 +132,6 @@ app.get('/api/persons/:id', (request, response, next)=>{
 app.get('/info', (request, response)=>{
     var date = new Date();
     const totalLen=persons.length
-    /*response.send(`<p>Phonebook has info for ${totalLen} people</p>
-                   <p>${date}</p>`)*/
     Person
     .find({})
     .then(persons => {
@@ -148,6 +142,28 @@ app.get('/info', (request, response)=>{
 
 // End code for api/info.
 
+
+// Begin code for updating entries via PUT request:
+
+app.put('/api/persons/:id', (request, response, next)=>{
+  const body = request.body
+
+  const newPerson = new Person({
+    //id: generateID(),
+    name: body.name,
+    number: body.number,
+  })
+
+  Person.findByIdAndUpdate(request.params.id, newPerson, {new: true})
+    .then(person =>{
+      response.json(person)
+    })
+    .catch(error=>next(error))
+})
+
+// End code for updating entries.
+
+
 // Begin code for deleting phonebook entries:
 app.delete('/api/persons/:id', (request, response, next ) =>{
   Person.findByIdAndRemove(request.params.id)
@@ -156,6 +172,8 @@ app.delete('/api/persons/:id', (request, response, next ) =>{
     })
     .catch(error => next(error))
 })
+
+// End coded for deleting phonebook entries.
 
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
