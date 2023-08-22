@@ -128,15 +128,6 @@ app.get('/api/persons/:id', (request, response, next)=>{
 
 })
 
-app.delete('/api/persons/:id', (request, response)=>{
-    const id =Number(request.params.id)
-    console.log(id);
-    persons = persons.filter(p=> p.id !== id)
-    console.log(persons);
-    
-    response.status(204).end()
-})
-
 // End code for api/persons.
 
 // Begin code for /info:
