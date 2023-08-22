@@ -3,9 +3,6 @@ console.log('hello world')
 const express = require('express')
 const app = express()
 var morgan = require('morgan')
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: 'unknown endpoint' })
-}
 const cors = require('cors')
 
 const mongoose = require('mongoose')
@@ -39,6 +36,23 @@ app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 app.use(cors())
 app.use(express.static('build'))
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) =>{
+  console.error(error.message)
+  if(error.name==='CastError'){
+    return response.status(400).send({
+      error: 'malformatted id'
+    })
+  }
+  next(error)
+}
+app.use(errorHandler)
+
 
 morgan.token('content', (request) =>
   request.method === 'POST' && request.body.name
@@ -76,7 +90,6 @@ app.get('/', (req, res) => {
 // Begin code for api/persons:  
 
 app.get('/api/persons', (req, res) =>{
-    //res.json(persons)
     Person
     .find({})
     .then(persons => {
@@ -85,10 +98,6 @@ app.get('/api/persons', (req, res) =>{
 })
 
 const generateID =  () =>{
-    /*const maxId = persons.length > 0
-        ? Math.max(...persons.map( p => p.id ))
-        : 0
-    return maxId+1*/
     return Math.floor(Math.random() * 1000);
 }
 
@@ -107,30 +116,18 @@ app.post('/api/persons', (request, response, next)=>{
         name: body.name,
         number: body.number,
     })
-    //persons = persons.concat(person)
-    //response.json(person)
     newPerson
       .save()
       .then(savedPerson=>savedPerson.toJSON())
       .then(savedPersonFormatted=>{
-        //console.log("Person's name and number: ", savedPersonFormatted.name, savedPersonFormatted.number);
         response.json(savedPersonFormatted)
       }).catch(error => next(error))
 
 })
 
-app.get('/api/persons/:id', (request, response)=>{
+app.get('/api/persons/:id', (request, response, next)=>{
     const id = Number(request.params.id)
     console.log(id);
-    /*const person = persons.find(p=> p.id === id)
-    console.log(person);
-
-    if(person){
-        response.json(person)
-    }
-    else{
-        response.status(404).end()
-    }*/
     Person.findById(id)
     .then(person => {
       if (person) {
@@ -139,10 +136,11 @@ app.get('/api/persons/:id', (request, response)=>{
         response.status(404).end() 
       }
     })
-    .catch(error => {
+    /*.catch(error => {
       console.log(error)
       response.status(400).send({ error: 'malformatted id' })    
-    })
+    })*/
+    .catch(error=>next(error))
 
 })
 
@@ -175,7 +173,15 @@ app.get('/info', (request, response)=>{
 
 // End code for api/info.
 
-app.use(unknownEndpoint)
+// Begin code for deleting phonebook entries:
+app.delete('/api/persons/:id', (request, response, next ) =>{
+  Person.findByIdAndRemove(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
+})
+
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
